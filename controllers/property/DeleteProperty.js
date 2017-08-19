@@ -1,14 +1,14 @@
 var property = require("../../models/property");
 var errHandler = require("../../modules/ErrorHandler");
 
-var controller = function(req, res, next) {
-  property.findByIdAndRemove(req.params.id, function(err, result){
+var controller = function (req, res, next) {
+  property.findByIdAndRemove(req.params.id, function (err, result) {
 
-    if (err || result == null){
+    if (err || result == null) {
       errHandler(res, err, "Resource not found", 404);
       res.end();
     }
-    else{
+    else {
       res.status(200).json(result);
     }
   })

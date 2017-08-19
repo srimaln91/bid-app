@@ -1,7 +1,7 @@
 var property = require("../../models/property");
 var errHandler = require("../../modules/ErrorHandler");
 
-var controller = function(req, res, next) {
+var controller = function (req, res, next) {
   var params = req.body;
 
   var newProperty = new property({
@@ -11,8 +11,8 @@ var controller = function(req, res, next) {
   });
 
   // save the property and check for errors
-  newProperty.save(function(err, data) {
-    if (err){
+  newProperty.save(function (err, data) {
+    if (err) {
       errHandler(res, err, "Error on update data", 500);
     }
     res.status(200).json(newProperty);

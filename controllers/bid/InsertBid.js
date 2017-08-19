@@ -2,11 +2,11 @@ var bid = require("../../models/bid");
 var property = require("../../models/property");
 var errHandler = require("../../modules/ErrorHandler");
 
-var controller = function(req, res, next) {
+var controller = function (req, res, next) {
   var params = req.body;
 
-  property.findById(params.propertyId, function(err, property){
-    
+  property.findById(params.propertyId, function (err, property) {
+
     var newBid = new bid({
       value: params.value,
       date: new Date(),
@@ -14,8 +14,8 @@ var controller = function(req, res, next) {
     });
 
     // save the bid and check for errors
-    newBid.save(function(err, data) {
-      if (err){
+    newBid.save(function (err, data) {
+      if (err) {
         console.log(err);
         errHandler(res, err, "Error on update data", 500);
       }
@@ -23,7 +23,7 @@ var controller = function(req, res, next) {
     });
 
   });
-  
+
 };
 
 module.exports = controller;
