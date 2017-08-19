@@ -4,16 +4,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
+
+var config = require('./config/config');
 var index = require('./routes/index');
 var bids = require('./routes/bids');
-var authentication = require('./routes/authentication');
+var authentication = require('./routes/auth');
 var property = require('./routes/property');
+var checkToken = require('./middlewares/auth');
 
 var app = express();
-
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -23,8 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/auth', authentication);
-app.use('/bids', bids);
-app.use('/property', property);
+app.use('/bids', checkToken, bids);
+app.use('/property', checkToken, property);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,14 +46,13 @@ app.use(function(err, req, res, next) {
 });
 
 //var uri = "mongodb://srimal:srimal123@ds147520.mlab.com:47520/tododata";
-var uri = "mongodb://localhost:27017/bidapp";
-mongoose.connect(uri, {
+mongoose.connect(config.database.connectionString, {
   useMongoClient: true,
 });
 
 // Start the HTTP server once the app successfully connected to the Mongo DB
 mongoose.connection.on('connected', function () {  
-  console.log('Mongoose default connection open to ' + uri);
+  console.log('Mongoose default connection opened');
 
   //If the database connection is ok, start listening
   app.listen('3100', function(){
