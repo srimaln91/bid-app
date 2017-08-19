@@ -3,10 +3,11 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var mongoose = require('mongoose');
 var index = require('./routes/index');
 var bids = require('./routes/bids');
 var authentication = require('./routes/authentication');
+var property = require('./routes/property');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/auth', authentication);
 app.use('/bids', bids);
+app.use('/property', property);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,4 +45,19 @@ app.use(function(err, req, res, next) {
 
 });
 
-module.exports = app;
+//var uri = "mongodb://srimal:srimal123@ds147520.mlab.com:47520/tododata";
+var uri = "mongodb://localhost:27017/bidapp";
+mongoose.connect(uri, {
+  useMongoClient: true,
+});
+
+// Start the HTTP server once the app successfully connected to the Mongo DB
+mongoose.connection.on('connected', function () {  
+  console.log('Mongoose default connection open to ' + uri);
+
+  //If the database connection is ok, start listening
+  app.listen('3100', function(){
+    console.log("Listening on port 3100");
+  });
+
+}); 

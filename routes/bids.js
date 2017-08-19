@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-var deleteBid = require('../controllers/bids/DeleteBid');
-var getBid = require('../controllers/bids/GetBids');
-var updateBid = require('../controllers/bids/UpdateBid');
+var deleteBid = require('../controllers/bid/DeleteBid');
+var getBid = require('../controllers/bid/GetBids');
+var updateBid = require('../controllers/bid/UpdateBid');
+var insertBid = require('../controllers/bid/InsertBid');
 
-/* GET users listing. */
 router.get('/', getBid);
-router.post('/', updateBid);
+router.post('/', insertBid);
 router.delete('/', deleteBid);
+router.put('/', updateBid);
 
 module.exports = router;

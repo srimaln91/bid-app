@@ -1,8 +1,6 @@
 
-/* GET users listing. */
 var controller = function(req, res, next) {
-    res.send('Update bid');
-  };
-    
+  res.send('Insert bid');
+};
+
 module.exports = controller;
-  
