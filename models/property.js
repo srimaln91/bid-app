@@ -7,6 +7,6 @@ var propertySchema = new Schema({
     title: String,
     address: String,
     startBid: Number,
-})
+});
 
 module.exports = mongoose.model('property', propertySchema);

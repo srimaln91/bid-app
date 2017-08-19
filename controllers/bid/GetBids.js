@@ -1,6 +1,14 @@
+var bid = require("../../models/bid");
+var errHandler = require("../../modules/ErrorHandler");
 
 var controller = function(req, res, next) {
-  res.send('respond with a bid index');
+
+  bid.find({propertyId : req.body.propertyId})
+  .sort({ value: -1 })
+  .exec(function(err, data){
+    res.json(data);
+  });
+
 };
 
 module.exports = controller;
