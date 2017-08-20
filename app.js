@@ -15,6 +15,9 @@ var checkToken = require('./middlewares/auth');
 
 var app = express();
 
+var server = require('http').createServer(app);  
+var io = require('socket.io')(server);
+
 //Enable CORS support
 app.use(cors());
 
@@ -57,8 +60,25 @@ mongoose.connect(config.database.connectionString, {
 mongoose.connection.on('connected', function () {  
   console.log('Mongoose default connection opened');
 
+  io.on('connection', function(socket) {
+    
+    console.log('user connected');
+
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
+    });
+
+    socket.on('new-bid', (message) => {
+        io.emit('reload');
+        console.log("test");
+        // Function above that stores the message in the database
+        //databaseStore(message)
+    });
+    
+  });
+
   //If the database connection is ok, start listening
-  app.listen('3100', function(){
+  server.listen('3100', function(){
     console.log("Listening on port 3100");
   });
 
