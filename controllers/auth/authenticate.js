@@ -23,7 +23,12 @@ var authController = function (req, res, next) {
               expiresIn: 60 * 60 // expires in 24 hours
             });
 
-            res.status(200).json({ "success": true, "token": token, "user": user });
+            res.status(200).json({ "success": true, "token": token, "user": {
+              "_id": user._id,
+              "fullName": user.fullName,
+              "userName": user.userName,
+              "email": user.email
+            }});
 
           } else {
             res.status(200).json({ "success": false, "message": "Authentication error" });
