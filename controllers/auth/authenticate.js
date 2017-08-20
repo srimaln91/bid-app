@@ -20,7 +20,7 @@ var authController = function (req, res, next) {
           if (status) {
 
             var token = jwt.sign(user, config.secret, {
-              expiresIn: 60 * 60 // expires in 24 hours
+              expiresIn: 60 * 60 
             });
 
             res.status(200).json({ "success": true, "token": token, "user": {

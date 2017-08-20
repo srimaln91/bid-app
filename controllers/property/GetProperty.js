@@ -3,7 +3,7 @@ var errHandler = require("../../modules/ErrorHandler");
 
 var controller = function (req, res, next) {
   
-
+  //Find and respond with one property
   if(req.params.id != undefined ){
     
     params = { _id: req.params.id };
@@ -16,6 +16,7 @@ var controller = function (req, res, next) {
     });
 
   }
+  //Respond with all properties
   else{
     property.find({})
     .populate('bids', null, null, { sort: { 'value': -1 } })

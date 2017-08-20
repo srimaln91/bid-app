@@ -60,19 +60,21 @@ mongoose.connect(config.database.connectionString, {
 mongoose.connection.on('connected', function () {  
   console.log('Mongoose default connection opened');
 
+  var userCount = 0;
   io.on('connection', function(socket) {
-    
+    userCount++;
     console.log('user connected');
 
+    io.emit('user-connected', {users: userCount});
+
     socket.on('disconnect', function() {
-        console.log('user disconnected');
+      userCount--;
+      console.log('user disconnected');
     });
 
     socket.on('new-bid', (message) => {
         io.emit('reload');
-        console.log("test");
-        // Function above that stores the message in the database
-        //databaseStore(message)
+
     });
     
   });
