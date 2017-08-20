@@ -8,6 +8,7 @@ var insertProperty = require('../controllers/property/InsertProperty');
 
 /* GET users listing. */
 router.get('/', getProperty);
+router.get('/:id', getProperty);
 router.post('/', insertProperty);
 router.delete('/:id', deleteProperty);
 router.put('/:id', updateProperty);

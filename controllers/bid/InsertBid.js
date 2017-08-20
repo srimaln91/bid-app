@@ -5,12 +5,12 @@ var errHandler = require("../../modules/ErrorHandler");
 var controller = function (req, res, next) {
   var params = req.body;
 
-  property.findById(params.propertyId, function (err, property) {
+  property.findById(params.propertyId, function (err, prop) {
 
     var newBid = new bid({
       value: params.value,
       date: new Date(),
-      _property: property,
+      _property: prop,
       _user: params.userId
     });
 
@@ -20,9 +20,15 @@ var controller = function (req, res, next) {
         console.log(err);
         errHandler(res, err, "Error on update data", 500);
       }
-      property.bids.push(newBid);
-      property.save(function(err) {
-        res.status(200).json(newBid);
+      prop.bids.push(newBid);
+      prop.save(function(err, newProperty) {
+
+        property.findOne({_id: newProperty._id})
+        .populate('bids', null, null, { sort: { 'value': -1 } })
+        .exec(function (err, properties) {
+          if (err) return handleError(err);
+          res.json(properties);
+        });
       });
       
     });

@@ -11,6 +11,7 @@ var checkToken = function (req, res, next) {
     // verifies secret and checks exp
     jwt.verify(token, config.secret, function (err, decoded) {
       if (err) {
+        res.status(403);
         return res.json({ success: false, message: 'Failed to authenticate token.' });
       } else {
         // if everything is good, save to request for use in other routes
