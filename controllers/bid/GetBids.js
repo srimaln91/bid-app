@@ -5,6 +5,7 @@ var controller = function (req, res, next) {
 
   bid.find({ propertyId: req.body.propertyId })
     .sort({ value: -1 })
+    .populate("Property")
     .exec(function (err, data) {
       res.json(data);
     });

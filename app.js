@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
-
+var cors = require('cors');
 var config = require('./config/config');
 var index = require('./routes/index');
 var bids = require('./routes/bids');
@@ -14,6 +14,9 @@ var property = require('./routes/property');
 var checkToken = require('./middlewares/auth');
 
 var app = express();
+
+//Enable CORS support
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

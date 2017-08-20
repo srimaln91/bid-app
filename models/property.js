@@ -7,6 +7,7 @@ var propertySchema = new Schema({
   title: String,
   address: String,
   startBid: Number,
+  bids : [{type: mongoose.Schema.Types.ObjectId, ref:'Bid'}]
 });
 
-module.exports = mongoose.model('property', propertySchema);
+module.exports = mongoose.model('Property', propertySchema);

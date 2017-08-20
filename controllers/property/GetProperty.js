@@ -3,12 +3,12 @@ var errHandler = require("../../modules/ErrorHandler");
 
 var controller = function (req, res, next) {
 
-  property.find(function (err, data) {
-    if (err) {
-      errHandler(res, err, "Error on retrive data", 500);
-    }
-    res.json(data);
-  });
+  property.find({})
+    .populate('bids')
+    .exec(function (err, properties) {
+      if (err) return handleError(err);
+      res.json(properties);
+    });
 
 };
 

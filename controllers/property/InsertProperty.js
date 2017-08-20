@@ -7,7 +7,7 @@ var controller = function (req, res, next) {
   var newProperty = new property({
     title: params.title,
     address: params.address,
-    startBid: params.startBid
+    startBid: params.startBid,
   });
 
   // save the property and check for errors

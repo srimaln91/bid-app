@@ -10,7 +10,8 @@ var controller = function (req, res, next) {
     var newBid = new bid({
       value: params.value,
       date: new Date(),
-      propertyId: property._id
+      _property: property,
+      _user: params.userId
     });
 
     // save the bid and check for errors
@@ -19,7 +20,11 @@ var controller = function (req, res, next) {
         console.log(err);
         errHandler(res, err, "Error on update data", 500);
       }
-      res.status(200).json(newBid);
+      property.bids.push(newBid);
+      property.save(function(err) {
+        res.status(200).json(newBid);
+      });
+      
     });
 
   });

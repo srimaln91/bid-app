@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var propertyBidSchema = new Schema({
   value: Number,
   date: Date,
-  propertyId: String,
+  _property: {type: mongoose.Schema.Types.ObjectId, ref:'Property'},
+  _user: {type: mongoose.Schema.Types.ObjectId, ref:'User'}
 });
 
-module.exports = mongoose.model('bid', propertyBidSchema);
+module.exports = mongoose.model('Bid', propertyBidSchema);
